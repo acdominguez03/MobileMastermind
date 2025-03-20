@@ -1,0 +1,32 @@
+# Archivos de compilación
+build/
+DerivedData/
+*.xcworkspace/
+*.xcuserdata/
+*.xcuserstate
+
+# Caché de Swift Package Manager
+.swiftpm/
+Package.resolved
+
+# Archivos de CocoaPods
+Pods/
+Podfile.lock
+
+# Archivos de Carthage
+Carthage/
+
+# Archivos de Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# Archivos generados por Xcode
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# Archivos de macOS
+.DS_Store
