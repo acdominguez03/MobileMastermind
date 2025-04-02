@@ -14,7 +14,6 @@
 "points_obtained" = "You have obtained %d points!!!";
 "category" = "Category:";
 
-
 //Login
 "user" = "User";
 "introduce_your_user" = "Introduce your user";
@@ -24,3 +23,10 @@
 "pass?" = " password?";
 "dont_have_an_account" = "Don't have an account? ";
 "register" = "Register";
+
+//Registro
+"already_have_an_account" = "Already have an account? ";
+"email" = "Email";
+"introduce_your_email" = "Introduce your email";
+"repeat_password" = "Repeat password";
+"repeat_your_password" = "Repeat your password";

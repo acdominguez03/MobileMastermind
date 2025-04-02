@@ -28,7 +28,7 @@ extension View {
         modifier(Bold(size: size, color: color))
     }
     
-    func semiBoldStyle() -> some View {
-        modifier(SemiBold())
+    func semiBoldStyle(size: CGFloat) -> some View {
+        modifier(SemiBold(size: size))
     }
 }
