@@ -59,6 +59,8 @@ struct Bold: ViewModifier {
 }
 
 struct SemiBold: ViewModifier {
+    var size: CGFloat
+    
     func body(content: Content) -> some View {
         content
             .font(Font.custom("Poppins-SemiBold", size: 25))
