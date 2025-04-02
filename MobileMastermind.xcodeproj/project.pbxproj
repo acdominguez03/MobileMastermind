@@ -10,9 +10,22 @@
 		7E4873912D9D9B9E0032FF3D /* MobileMastermind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileMastermind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7E4874522D9DA0730032FF3D /* Exceptions for "MobileMastermind" folder in "MobileMastermind" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7E4873902D9D9B9E0032FF3D /* MobileMastermind */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7E4873932D9D9B9E0032FF3D /* MobileMastermind */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7E4874522D9DA0730032FF3D /* Exceptions for "MobileMastermind" folder in "MobileMastermind" target */,
+			);
 			path = MobileMastermind;
 			sourceTree = "<group>";
 		};
@@ -258,6 +271,7 @@
 				DEVELOPMENT_TEAM = 4LP75YDTX4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MobileMastermind/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +302,7 @@
 				DEVELOPMENT_TEAM = 4LP75YDTX4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MobileMastermind/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -5,3 +5,11 @@
   Created by Andres Cordón on 2/4/25.
   
 */
+
+"last_game" = "Última partida:";
+"choose_a_photo" = "Selecciona una foto";
+"login" = "Iniciar sesión";
+"hello" = "Bienvenido!";
+"points_message" = "%d puntos";
+"points_obtained" = "Has obtenido %d puntos!!!";
+"category" = "Categoría:";
