@@ -33,3 +33,6 @@
 
 //Home
 "categories" = "Categorías";
+"global" = "General";
+"category" = "Categoría";
+"leaderboard" = "Ranking";

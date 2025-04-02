@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FilterRowView: View {
-    var title: String
+    var title: LocalizedStringKey
     var isSelected: Bool = false
     var onTapGesture: () -> Void
     
