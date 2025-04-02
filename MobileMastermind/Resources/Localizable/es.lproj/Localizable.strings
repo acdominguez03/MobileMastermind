@@ -9,7 +9,7 @@
 "last_game" = "Última partida:";
 "choose_a_photo" = "Selecciona una foto";
 "login" = "Iniciar sesión";
-"hello" = "Bienvenido!";
+"hello" = "Hola!";
 "points_message" = "%d puntos";
 "points_obtained" = "Has obtenido %d puntos!!!";
 "category" = "Categoría:";
@@ -30,3 +30,6 @@
 "introduce_your_email" = "Introduce tu email";
 "repeat_password" = "Repite la contraseña";
 "repeat_your_password" = "Repite tu contraseña";
+
+//Home
+"categories" = "Categorías";

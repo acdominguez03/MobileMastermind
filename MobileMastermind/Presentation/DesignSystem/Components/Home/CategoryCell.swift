@@ -11,6 +11,8 @@ struct CategoryModel: Identifiable, Hashable {
     let id: String
     let name: String
     let image: String
+    let type: String
+    let numberQuizzess: Int
 }
 
 struct CategoryCell: View {
@@ -31,6 +33,9 @@ struct CategoryCell: View {
             VStack(alignment: .leading) {
                 Text(category.name)
                     .boldStyle(size: 15, color: .black)
+                
+                Text("\(category.type) - \(category.numberQuizzess) preguntas")
+                    .regularStyle(size: 15, color: .black)
             }
             
             Spacer()
@@ -49,5 +54,5 @@ struct CategoryCell: View {
 }
 
 #Preview {
-    CategoryCell(category: CategoryModel(id: "1", name: "Swift", image: "https://res.cloudinary.com/dnuejyham/image/upload/v1743541421/swift_q2pmwe.png"))
+    CategoryCell(category: Utils.shared.categories[0])
 }
