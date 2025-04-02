@@ -33,6 +33,17 @@
 
 //Home
 "categories" = "Categories";
+
+//Leaderboard
 "global" = "Global";
 "category" = "Category";
 "leaderboard" = "Leaderboard";
+
+//Profile
+"points" = "Points";
+"best_result" = "Best Result";
+"best_game" = "Best Game";
+"best_question" = "Best Question";
+"total_games" = "Total Games";
+"correct_answers" = "Correct Answers";
+"incorrect_answers" = "Incorrect Answers";
