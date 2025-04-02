@@ -5,6 +5,13 @@
 //  Created by Andres Cordón on 2/4/25.
 //
 
+struct UserModel: Identifiable {
+    var id: Int
+    var username: String
+    var userImage: String
+    var points: Int
+}
+
 struct Utils {
     
     static let shared = Utils()
@@ -53,12 +60,7 @@ struct Utils {
     ]
     
     
-    struct UserModel: Identifiable {
-        var id: Int
-        var username: String
-        var userImage: String
-        var points: Int
-    }
+   
     
     var users: [UserModel] = [
         UserModel(
@@ -98,23 +100,11 @@ struct Utils {
             points: 300
         ),
         UserModel(
-            id: 0,
-            username: "Andres",
-            userImage: "https://res.cloudinary.com/dnuejyham/image/upload/v1729874344/fe9db982af7848e2fe9851a9b838951f_hllslr.jpg",
+            id: 3,
+            username: "Carlos",
+            userImage: "https://res.cloudinary.com/dnuejyham/image/upload/v1732275272/dnpsvqwfhj7suoklzmty.png",
             points: 200
         ),
-        UserModel(
-            id: 0,
-            username: "Andres",
-            userImage: "https://res.cloudinary.com/dnuejyham/image/upload/v1729874344/fe9db982af7848e2fe9851a9b838951f_hllslr.jpg",
-            points: 150
-        ),
-        UserModel(
-            id: 0,
-            username: "Andres",
-            userImage: "https://res.cloudinary.com/dnuejyham/image/upload/v1729874344/fe9db982af7848e2fe9851a9b838951f_hllslr.jpg",
-            points: 10
-        )
     ]
     
 }

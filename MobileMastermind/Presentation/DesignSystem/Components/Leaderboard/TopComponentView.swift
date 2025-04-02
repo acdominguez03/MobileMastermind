@@ -32,8 +32,8 @@ struct TopComponentView: View {
                 ProgressView()
             }
             
-            Text(username)
-                .regularStyle(size: 20, color: isCurrentUser ? .white : .black)
+            Text(isCurrentUser ? "Tu clasificación" : username)
+                .regularStyle(size: isCurrentUser ? 16 : 20, color: isCurrentUser ? .white : .black)
             
             Spacer()
             

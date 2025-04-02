@@ -33,3 +33,6 @@
 
 //Home
 "categories" = "Categories";
+"global" = "Global";
+"category" = "Category";
+"leaderboard" = "Leaderboard";
