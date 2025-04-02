@@ -13,3 +13,14 @@
 "points_message" = "%d points";
 "points_obtained" = "You have obtained %d points!!!";
 "category" = "Category:";
+
+
+//Login
+"user" = "User";
+"introduce_your_user" = "Introduce your user";
+"password" = "Password";
+"introduce_your_pass" = "Introduce your password";
+"forgot_pass" = "Forgot your";
+"pass?" = " password?";
+"dont_have_an_account" = "Don't have an account? ";
+"register" = "Register";
