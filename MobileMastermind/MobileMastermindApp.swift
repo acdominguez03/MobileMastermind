@@ -11,7 +11,7 @@ import SwiftUI
 struct MobileMastermindApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            GameResultsView()
         }
     }
 }

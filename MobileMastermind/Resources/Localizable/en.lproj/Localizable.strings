@@ -47,3 +47,7 @@
 "total_games" = "Total Games";
 "correct_answers" = "Correct Answers";
 "incorrect_answers" = "Incorrect Answers";
+
+//Game Results
+"results" = "Results";
+"your_answers" = "Your answers";
