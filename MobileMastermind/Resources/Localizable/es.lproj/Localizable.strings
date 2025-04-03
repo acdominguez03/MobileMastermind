@@ -33,6 +33,17 @@
 
 //Home
 "categories" = "Categorías";
+
+//Leaderboard
 "global" = "General";
 "category" = "Categoría";
 "leaderboard" = "Ranking";
+
+//Profile
+"points" = "Puntos";
+"best_result" = "Mejor resultado";
+"best_game" = "Mejor Partida";
+"best_question" = "Mejor Pregunta";
+"total_games" = "Partidas Totales";
+"correct_answers" = "Preguntas Correctas";
+"incorrect_answers" = "Preguntas Incorrectas";
