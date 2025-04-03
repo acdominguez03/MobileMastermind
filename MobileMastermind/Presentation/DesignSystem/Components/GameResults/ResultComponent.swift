@@ -37,9 +37,9 @@ struct ResultComponent: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 15)
-        .background(RoundedRectangle(cornerRadius: 20).fill(Color.white))
-        .padding(.horizontal, 25)
-        .shadow(radius: 20)
+        .background(
+            RoundedRectangle(cornerRadius: 20).fill(Color.white).shadow(radius: 20)
+        )
     }
 }
 
