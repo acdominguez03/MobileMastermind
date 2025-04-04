@@ -23,7 +23,7 @@ struct ImageQuestionView: View {
                         .scaledToFill()
                         .frame(width: UIScreen.main.bounds.width - 40, height: 220)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                        
+                    
                 } placeholder: {
                     ProgressView()
                         .frame(width: UIScreen.main.bounds.width - 40, height: 220)
@@ -56,7 +56,7 @@ struct ImageQuestionView: View {
         id: "", title: "¿Quién es este jugador?",
         options: [],
         correctAnswer: "Ray Allen",
-        image: "https://res.cloudinary.com/dnuejyham/image/upload/v1729076368/z1zje7hvmrh04jeub5ch.jpg"
+        image: "https://res.cloudinary.com/dnuejyham/image/upload/v1743760191/image_twjqdk.png"
     ), checkInputNameLenght: { }, missingLettersText: "Quedan 9 caracteres", initMissingLetterText: {}, name: .constant(""))
 }
 

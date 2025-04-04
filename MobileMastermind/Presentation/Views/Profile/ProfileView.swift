@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @Binding var path: [Routes]
     
     var body: some View {
         VStack(spacing: 10) {
@@ -74,5 +75,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(path: .constant([]))
 }
