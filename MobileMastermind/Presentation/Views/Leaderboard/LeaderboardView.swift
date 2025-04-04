@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LeaderboardView: View {
+    @Binding var path: [Routes]
     var users: [UserModel] = Utils().users
     
     @State var isSelectedGlobalFilter: Bool = true
@@ -107,5 +108,5 @@ struct LeaderboardView: View {
 }
 
 #Preview {
-    LeaderboardView()
+    LeaderboardView(path: .constant([]))
 }

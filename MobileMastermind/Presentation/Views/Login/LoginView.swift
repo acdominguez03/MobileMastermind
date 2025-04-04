@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    @Binding var path: [Routes]
     @State private var username: String = ""
     @State private var password: String = ""
     
@@ -34,21 +35,31 @@ struct LoginView: View {
             CustomButton(
                 title: LocalizedStringKey("login"),
                 isDisabled: isDisabled
-            ) {}
+            ) {
+                path.append(Routes.Home)
+            }
             
             Spacer()
             
             HStack(spacing: 0) {
                 Text(LocalizedStringKey("dont_have_an_account"))
                     .regularStyle(size: 14, color: .black)
-                Text(LocalizedStringKey("register")).boldStyle(size: 14, color: Color.Colors.principalGreen)
+                
+                Button {
+                    path.append(Routes.Register)
+                } label: {
+                    Text(LocalizedStringKey("register")).boldStyle(size: 14, color: Color.Colors.principalGreen)
+                }
+
+               
             }
         }
         .padding(.horizontal, 32)
         .background(Color.Colors.background)
+        .navigationBarBackButtonHidden()
     }
 }
 
 #Preview {
-    LoginView()
+    LoginView(path: .constant([]))
 }

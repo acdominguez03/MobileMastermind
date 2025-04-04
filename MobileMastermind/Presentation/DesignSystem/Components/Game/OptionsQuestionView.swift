@@ -24,6 +24,7 @@ struct OptionsQuestionView: View {
             Text(question.title)
                 .mediumStyle(size: 20, color: .black)
                 .padding(20)
+                .multilineTextAlignment(.center)
         }
         
         ForEach(question.options.indices, id: \.self) { index in

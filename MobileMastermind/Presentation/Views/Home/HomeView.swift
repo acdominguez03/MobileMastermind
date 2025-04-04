@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Binding var path: [Routes]
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
             HomeTopBar()
@@ -20,16 +22,21 @@ struct HomeView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     ForEach(Utils.shared.categories) { category in
-                        CategoryCell(category: category)
+                        Button {
+                            path.append(Routes.Game)
+                        } label: {
+                            CategoryCell(category: category)
+                        }
                     }
                 }.padding(.bottom, 10)
             }
         }
         .padding(.horizontal, 20)
         .background(Color.Colors.background)
+        .navigationBarBackButtonHidden()
     }
 }
 
 #Preview {
-    HomeView()
+    HomeView(path: .constant([]))
 }
