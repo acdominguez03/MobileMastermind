@@ -28,7 +28,7 @@ struct Utils {
             id: 0,
             categoryName: "Kotlin",
             categoryImage: "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin_Icon.png",
-            bestGameValue: 700,
+            bestGameValue: 1000,
             betterQuestionValue: 82,
             totalGames: 2,
             correctAnswers: 15,
@@ -108,10 +108,9 @@ struct Utils {
     ]
     
     var questions = [
-        QuestionModel(id: "0", title: "¿Cuál es el resultado?", options: [], correctAnswer: "1,2"),
-        QuestionModel(id: "1", title: "Kotlin es totalmente compatible con el código Java y puede usarse junto a él en el mismo proyecto", options: [OptionModel(value: "Verdadero", state: OptionState.Success), OptionModel(value: "Falso", state: OptionState.Error)], correctAnswer: "0"),
-        QuestionModel(id: "2", title: "¿Cuál de las siguientes opciones es la forma correcta de declarar una variable inmutable en Kotlin?", options: [OptionModel(value: "val nombre = 'Kotlin'", state: OptionState.Default)], correctAnswer: "0"),
-        QuestionModel(id: "3", title: "¿Quién es este jugador?", options: [OptionModel(value: "Andres", state: OptionState.Default)], correctAnswer: "0")
+        QuestionModel(id: "0", title: "¿Cuál es el resultado?", options: [], correctAnswer: "1,2", image: "https://res.cloudinary.com/dnuejyham/image/upload/v1743760915/example_nhe7ph.png", state: .Error),
+        QuestionModel(id: "1", title: "Kotlin es totalmente compatible con el código Java y puede usarse junto a él en el mismo proyecto", options: [OptionModel(value: "Verdadero", state: OptionState.Success), OptionModel(value: "Falso", state: OptionState.Default)], correctAnswer: "0", state: .Success),
+        QuestionModel(id: "2", title: "¿Cuál de las siguientes opciones es la forma correcta de declarar una variable inmutable en Swift?", options: [OptionModel(value: "val nombre = 'Kotlin'", state: OptionState.Default), OptionModel(value: "let nombre = 'Kotlin'", state: OptionState.Success), OptionModel(value: "var nombre = 'Kotlin'", state: OptionState.Error), OptionModel(value: "const var nombre = 'Kotlin'", state: OptionState.Default)], correctAnswer: "1", state: .Error)
     ]
     
 }

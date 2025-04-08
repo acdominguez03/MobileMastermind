@@ -37,16 +37,17 @@
 //Leaderboard
 "global" = "General";
 "category" = "Categoría";
-"leaderboard" = "Ranking";
+"leaderboard" = "Clasificación";
+"you" = "Tú";
 
 //Profile
 "points" = "Puntos";
-"best_result" = "Mejor resultado";
-"best_game" = "Mejor Partida";
+"best_result" = "Mejor partida";
+"best_game" = "Mejor partida";
 "best_question" = "Mejor Pregunta";
-"total_games" = "Partidas Totales";
+"total_games" = "Total de partidas";
 "correct_answers" = "Preguntas Correctas";
-"incorrect_answers" = "Preguntas Incorrectas";
+"incorrect_answers" = "Preguntas Falladas";
 
 //Game Results
 "results" = "Resultados";

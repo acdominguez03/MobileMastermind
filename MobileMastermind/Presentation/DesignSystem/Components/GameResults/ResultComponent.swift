@@ -30,6 +30,8 @@ struct ResultComponent: View {
                 Text("\(hits)")
                     .boldStyle(size: 30, color: .black)
                 Image(.QuestionsIcons.successGreen)
+                Spacer()
+                    .frame(width: 30, height: 30)
                 Text("\(errors)")
                     .boldStyle(size: 30, color: .black)
                 Image(.QuestionsIcons.failedRed)

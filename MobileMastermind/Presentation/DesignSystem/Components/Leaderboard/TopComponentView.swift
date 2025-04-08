@@ -32,7 +32,7 @@ struct TopComponentView: View {
                 ProgressView()
             }
             
-            Text(isCurrentUser ? "Tu clasificación" : username)
+            Text(isCurrentUser ? "Tú" : username)
                 .regularStyle(size: isCurrentUser ? 16 : 20, color: isCurrentUser ? .white : .black)
             
             Spacer()
@@ -43,7 +43,7 @@ struct TopComponentView: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
         .background(
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 20)
                 .fill(isCurrentUser ? Color.Colors.principalGreen : .white)
         )
     }

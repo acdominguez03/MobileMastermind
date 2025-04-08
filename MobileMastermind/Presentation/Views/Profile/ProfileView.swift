@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @Binding var path: [Routes]
     
     var body: some View {
         VStack(spacing: 10) {
@@ -16,8 +17,8 @@ struct ProfileView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(
-                        width: 100,
-                        height: 100
+                        width: 150,
+                        height: 150
                     )
                     .clipShape(Circle())
             } placeholder: {
@@ -25,27 +26,28 @@ struct ProfileView: View {
             }
             
             Text(Utils.shared.users[0].username)
-                .mediumStyle(size: 20, color: .black)
-            
-            Text(verbatim: "acordon@gmail.com")
-                .regularStyle(size: 15, color: .black)
-                .padding(.bottom, 10)
+                .mediumStyle(size: 30, color: .black)
             
             HStack(spacing: 15) {
                 Spacer()
                 
                 UserGeneralStatComponent(image: .ProfileIcons.points, title: LocalizedStringKey("points"), description: "\(Utils.shared.users[0].points)", color: Color.Colors.questionErrorRed)
                 
-                Spacer()
+                Divider()
+                    .frame(height: 70)
+                    .background(Color.Colors.background)
                 
                 UserGeneralStatComponent(image: .ProfileIcons.bestScore, title: LocalizedStringKey("best_result"), description: "\(500)", color: Color.Colors.principalGreen)
                 
-                Spacer()
+                Divider()
+                    .frame(height: 70)
+                    .background(Color.Colors.background)
                 
                 UserGeneralStatComponent(image: .ProfileIcons.ranking, title: LocalizedStringKey("leaderboard"), description: "\(3)", color: Color.Colors.firstPlace)
+                
                 Spacer()
             }
-            .padding(15)
+            .padding(.vertical, 15)
             .background(
                 RoundedRectangle(cornerRadius: 10)
                     .foregroundStyle(.white)
@@ -74,5 +76,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(path: .constant([]))
 }
