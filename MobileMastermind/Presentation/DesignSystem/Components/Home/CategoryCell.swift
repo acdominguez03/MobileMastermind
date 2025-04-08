@@ -36,6 +36,7 @@ struct CategoryCell: View {
                 
                 Text("\(category.type) - \(category.numberQuizzess) preguntas")
                     .regularStyle(size: 15, color: .black)
+                    .lineLimit(1)
             }
             
             Spacer()

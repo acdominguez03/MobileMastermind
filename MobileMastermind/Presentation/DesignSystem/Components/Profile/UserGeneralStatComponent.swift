@@ -15,18 +15,18 @@ struct UserGeneralStatComponent: View {
     
     var body: some View {
         VStack {
-            ZStack {
-                Image(image)
-                    .resizable()
-                    .frame(width: 30, height: 30)
-            }
+            Image(image)
+                .resizable()
+                .frame(width: 30, height: 30)
             
             Text(title)
                 .regularStyle(size: 12, color: .black)
+                .multilineTextAlignment(.center)
             
             Text(description)
                 .boldStyle(size: 15, color: Color(color))
         }
+        .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 

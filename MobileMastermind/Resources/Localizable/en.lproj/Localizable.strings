@@ -38,6 +38,7 @@
 "global" = "Global";
 "category" = "Category";
 "leaderboard" = "Leaderboard";
+"you" = "You";
 
 //Profile
 "points" = "Points";

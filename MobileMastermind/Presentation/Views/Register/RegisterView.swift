@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RegisterView: View {
-    
+    @Binding var path: [Routes]
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
@@ -47,6 +47,7 @@ struct RegisterView: View {
                 title: LocalizedStringKey("register"),
                 isDisabled: isDisabled,
                 action: {
+                    path.append(Routes.Home)
                 }
             )
             
@@ -57,7 +58,7 @@ struct RegisterView: View {
                     .regularStyle(size: 14, color: .black)
                 
                 Button(action: {
-                    
+                    path.removeLast()
                 }, label: {
                     Text(LocalizedStringKey("login"))
                         .boldStyle(size: 14, color: Color.Colors.principalGreen)
@@ -66,9 +67,10 @@ struct RegisterView: View {
         }
         .padding(.horizontal, 32)
         .background(Color.Colors.background)
+        .navigationBarBackButtonHidden()
     }
 }
 
 #Preview {
-    RegisterView()
+    RegisterView(path: .constant([]))
 }

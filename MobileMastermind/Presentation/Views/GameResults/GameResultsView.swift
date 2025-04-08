@@ -8,12 +8,8 @@
 import SwiftUI
 
 struct GameResultsView: View {
-    @State var questions: [QuestionModel] = [
-        QuestionModel(id: "0", title: "¿Cuál es el resultado?", options: [], correctAnswer: "1,2"),
-        QuestionModel(id: "1", title: "Kotlin es totalmente compatible con el código Java y puede usarse junto a él en el mismo proyecto", options: [OptionModel(value: "Verdadero", state: OptionState.Success), OptionModel(value: "Falso", state: OptionState.Error)], correctAnswer: "0"),
-        QuestionModel(id: "2", title: "¿Cuál de las siguientes opciones es la forma correcta de declarar una variable inmutable en Kotlin?", options: [OptionModel(value: "val nombre = 'Kotlin'", state: OptionState.Default)], correctAnswer: "0"),
-        QuestionModel(id: "3", title: "¿Quién es este jugador?", options: [OptionModel(value: "Andres", state: OptionState.Default)], correctAnswer: "0")
-    ]
+    @Binding var path: [Routes]
+    @State var questions: [QuestionModel] = Utils.shared.questions
     
     var body: some View {
         
@@ -25,7 +21,7 @@ struct GameResultsView: View {
             ResultComponent(categoryName: "Kotlin", points: 350, hits: 5, errors: 5)
             
             HStack {
-                Text(LocalizedStringKey("your_results"))
+                Text(LocalizedStringKey("your_answers"))
                     .mediumStyle(size: 20, color: .black)
                 Spacer()
             }
@@ -47,14 +43,17 @@ struct GameResultsView: View {
                     .foregroundStyle(.white)
             )
             
-            CustomButton(title: "Next") {}
+            CustomButton(title: "Next") {
+                path.removeLast(2)
+            }
         }
         .padding(.horizontal, 25)
         .background(Color.Colors.background)
+        .navigationBarBackButtonHidden()
     }
 }
 
 #Preview {
-    GameResultsView(questions: [])
+    GameResultsView(path: .constant([]))
 }
 
