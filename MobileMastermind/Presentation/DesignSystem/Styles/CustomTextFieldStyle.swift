@@ -14,5 +14,7 @@ struct CustomTextFieldStyle: TextFieldStyle {
             .regularStyle(size: 14, color: Color.black)
             .foregroundStyle(Color("Placeholder"))
             .background(RoundedRectangle(cornerRadius: 8).fill(Color.white))
+            .autocorrectionDisabled(true)
+            .textInputAutocapitalization(.never)
     }
 }
