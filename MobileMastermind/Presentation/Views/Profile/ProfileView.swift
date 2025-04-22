@@ -9,21 +9,41 @@ import SwiftUI
 
 struct ProfileView: View {
     @Binding var path: [Routes]
+    @State var viewModel: ProfileViewModel = ProfileViewModel()
     
     var body: some View {
         VStack(spacing: 10) {
-            AsyncImage(url: URL(string: Utils.shared.users[0].userImage)){ image in
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(
-                        width: 150,
-                        height: 150
-                    )
-                    .clipShape(Circle())
-            } placeholder: {
-                ProgressView()
+            ZStack {
+                AsyncImage(url: URL(string: Utils.shared.users[0].userImage)){ image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(
+                            width: 150,
+                            height: 150
+                        )
+                        .clipShape(Circle())
+                } placeholder: {
+                    ProgressView()
+                }
+                
+                Button {
+                    Task {
+                        try await viewModel.logout {
+                            path.removeAll()
+                        }
+                    }
+                } label: {
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(.black)
+                        .frame(width: 25, height: 25)
+                        .frame(maxWidth: .infinity, maxHeight: 150, alignment: .topTrailing)
+                        .padding(.horizontal, 20)
+                }
             }
+            
             
             Text(Utils.shared.users[0].username)
                 .mediumStyle(size: 30, color: .black)

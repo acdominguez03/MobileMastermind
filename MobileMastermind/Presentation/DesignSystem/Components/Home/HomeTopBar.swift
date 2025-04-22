@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct HomeTopBar: View {
-    var username: String = "Andrés"
+    @State var username: String = "Andrés"
+    @State var image: String = "Profile"
     var points: Int = 300
     
     var body: some View {
         HStack(alignment: .center, spacing: 15) {
-            Image("Profile")
-                .frame(width: 60, height: 60)
+            AsyncImage(url: URL(string: image)){ image in
+                image.resizable()
+                    .frame(width: 60, height: 60)
+                    .clipShape(Circle())
+            } placeholder: {
+                ProgressView()
+                    .frame(width: 60, height: 60)
+            }
             
             VStack(alignment: .leading) {
                 Text(LocalizedStringKey("hello"))
@@ -28,6 +35,10 @@ struct HomeTopBar: View {
             Text(String(format: NSLocalizedString("points_message", comment: ""), points))
                 .mediumStyle(size: 14, color: .black)
             
+        }
+        .onAppear {
+            username = MobileMastermindDefaultsManager.shared.username
+            image = MobileMastermindDefaultsManager.shared.imageURL
         }
     }
 }
