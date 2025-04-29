@@ -5,6 +5,8 @@
 //  Created by Andres Cordón on 2/4/25.
 //
 
+import Foundation
+
 struct UserModel: Identifiable {
     var id: Int
     var username: String
@@ -15,6 +17,24 @@ struct UserModel: Identifiable {
 struct Utils {
     
     static let shared = Utils()
+    
+    func checkError(error: ErrorDTO) -> String {
+        let code = error.code
+        switch code {
+        case 400...499:
+            return error.message
+        case 500:
+            return "Error en la conexión de red"
+        default:
+            return "Error desconocido"
+        }
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let regex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
+        return predicate.evaluate(with: email)
+    }
     
     var categories: [CategoryModel] = [
         CategoryModel(id: "0", name: "Kotlin", image: "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin_Icon.png", type: "Language", numberQuizzess: 10),

@@ -13,6 +13,7 @@ struct CustomTextField: View {
     
     var title: LocalizedStringKey
     var placeholder: LocalizedStringKey
+    var error: String = ""
     var isSecureField: Bool = false
     @Binding var text: String
     @State var showText: Bool = false
@@ -27,10 +28,10 @@ struct CustomTextField: View {
                 
                 if(showText) {
                     SecureField(placeholder, text: $text)
-                        .textFieldStyle(CustomTextFieldStyle())
+                        .textFieldStyle(CustomTextFieldStyle(hasError: !error.isEmpty))
                 } else {
                     TextField(placeholder, text: $text)
-                        .textFieldStyle(CustomTextFieldStyle())
+                        .textFieldStyle(CustomTextFieldStyle(hasError: !error.isEmpty))
                         .onChange(of: text) { oldValue, newValue in
                             onChange()
                         }
@@ -45,6 +46,11 @@ struct CustomTextField: View {
                 })
                 .opacity(isSecureField ? 1 : 0)
             }.animation(.easeInOut(duration: 0.3), value: showText)
+            
+            if(!error.isEmpty) {
+                Text(error)
+                    .foregroundStyle(Color.Colors.questionErrorRed)
+            }
         }
     }
 }

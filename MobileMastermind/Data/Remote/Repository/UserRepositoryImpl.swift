@@ -26,6 +26,15 @@ struct UserRepositoryImpl: UserRepositoryProtocol {
         }
     }
     
+    func register(username: String, email: String, password: String, image: Data) async throws -> RegisterBO {
+        do {
+            let result = try await remote.register(username: username, email: email, password: password, image: image)
+            return result.data.toRegisterBO
+        } catch {
+            throw error
+        }
+    } 
+    
     func logout() async throws -> Int {
         do {
             let result = try await remote.logout()
