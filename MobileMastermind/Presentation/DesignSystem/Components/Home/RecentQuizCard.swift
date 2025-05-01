@@ -10,7 +10,6 @@ import SwiftUI
 struct RecentQuizCard: View {
     var categoryImage: String = "https://res.cloudinary.com/dnuejyham/image/upload/v1743541421/swift_q2pmwe.png"
     var points: Int = 300
-    var categoryName: String = "Kotlin"
     
     var body: some View {
         HStack(spacing: 15) {

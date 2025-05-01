@@ -36,11 +36,11 @@ struct Utils {
         return predicate.evaluate(with: email)
     }
     
-    var categories: [CategoryModel] = [
-        CategoryModel(id: "0", name: "Kotlin", image: "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin_Icon.png", type: "Language", numberQuizzess: 10),
-        CategoryModel(id: "1", name: "Swift", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-NmkQzBEJWMHZiu12EQpS7jQ5LrblCcMFDCDZUzVgbvmJ9LzCukslXuaSdFw7pPqCVk&usqp=CAU", type: "Language", numberQuizzess: 10),
-        CategoryModel(id: "2", name: "Android Studio", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Android_Studio_icon_%282023%29.svg/2048px-Android_Studio_icon_%282023%29.svg.png",  type: "IDE", numberQuizzess: 10),
-        CategoryModel(id: "3", name: "Xcode", image: "https://w7.pngwing.com/pngs/505/718/png-transparent-xcode-macos-bigsur-icon-thumbnail.png",  type: "IDE", numberQuizzess: 10),
+    var categories: [CategoryBO] = [
+        CategoryBO(id: "0", name: "Kotlin", image: "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin_Icon.png", type: "Language", numberOfQuizzes: 10),
+        CategoryBO(id: "1", name: "Swift", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-NmkQzBEJWMHZiu12EQpS7jQ5LrblCcMFDCDZUzVgbvmJ9LzCukslXuaSdFw7pPqCVk&usqp=CAU", type: "Language", numberOfQuizzes: 10),
+        CategoryBO(id: "2", name: "Android Studio", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Android_Studio_icon_%282023%29.svg/2048px-Android_Studio_icon_%282023%29.svg.png",  type: "IDE", numberOfQuizzes: 10),
+        CategoryBO(id: "3", name: "Xcode", image: "https://w7.pngwing.com/pngs/505/718/png-transparent-xcode-macos-bigsur-icon-thumbnail.png", type: "IDE", numberOfQuizzes: 10),
     ]
     
     var stats: [CategoryStatsModel] = [

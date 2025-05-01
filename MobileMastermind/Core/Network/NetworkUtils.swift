@@ -7,12 +7,6 @@
 
 import Foundation
 
-enum UsersEndpoints: String {
-    case login = "users/login"
-    case register = "users/register"
-    case logout = "users/logout"
-}
-
 enum HttpMethod: String {
     case post = "POST"
     case get = "GET"

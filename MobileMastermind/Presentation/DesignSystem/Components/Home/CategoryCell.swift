@@ -7,16 +7,8 @@
 
 import SwiftUI
 
-struct CategoryModel: Identifiable, Hashable {
-    let id: String
-    let name: String
-    let image: String
-    let type: String
-    let numberQuizzess: Int
-}
-
 struct CategoryCell: View {
-    var category: CategoryModel
+    var category: CategoryBO
     
     var body: some View {
         HStack(spacing: 20) {
@@ -34,7 +26,7 @@ struct CategoryCell: View {
                 Text(category.name)
                     .boldStyle(size: 15, color: .black)
                 
-                Text("\(category.type) - \(category.numberQuizzess) preguntas")
+                Text("\(category.type) - \(category.numberOfQuizzes) preguntas")
                     .regularStyle(size: 15, color: .black)
                     .lineLimit(1)
             }
