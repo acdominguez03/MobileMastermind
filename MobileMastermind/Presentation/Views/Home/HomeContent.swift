@@ -11,18 +11,26 @@ struct HomeContent: View {
     
     @Binding var path: [Routes]
     
+    @State private var viewModel: HomeViewModel = HomeViewModel()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
-            HomeTopBar()
+            HomeTopBar(points: viewModel.totalPoints)
             
-            RecentQuizCard()
+            if let lastUserGame = viewModel.lastUserGame {
+                RecentQuizCard(
+                    categoryImage: lastUserGame.categoryImage,
+                    points: lastUserGame.points
+                )
+            }
+            
             
             Text(LocalizedStringKey("categories"))
                 .semiBoldStyle(size: 35)
             
             ScrollView {
                 VStack(spacing: 20) {
-                    ForEach(Utils.shared.categories) { category in
+                    ForEach(viewModel.categories, id:\.id) { category in
                         Button {
                             path.append(Routes.Game)
                         } label: {
@@ -35,6 +43,11 @@ struct HomeContent: View {
         .padding(.horizontal, 20)
         .background(Color.Colors.background)
         .navigationBarBackButtonHidden()
+        .onAppear {
+            Task {
+                try await viewModel.getTotalUserPoints()
+            }
+        }
     }
 }
 

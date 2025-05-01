@@ -80,6 +80,9 @@ struct LoginView: View {
             .background(Color.Colors.background)
             .navigationBarBackButtonHidden()
             .ignoresSafeArea(.keyboard)
+            .onAppear {
+                focusedField = .username
+            }
             .onTapGesture {
                 focusedField = nil
             }
