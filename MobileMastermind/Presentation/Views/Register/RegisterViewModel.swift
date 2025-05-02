@@ -17,7 +17,8 @@ import PhotosUI
     var password: String = ""
     var repeatPassword: String = ""
     
-    var error: String = ""
+    var errorType: RegisterErrors? = nil
+    var errorMessage: String = ""
     
     var isLoading: Bool = false
     
@@ -34,23 +35,57 @@ import PhotosUI
     }
     
     func registerUser(completion: @escaping () -> Void) async throws {
-        isLoading = true
-        let result = try await registerUseCase.execute(username: username, email: email, password: password, image: imageData)
-        switch result {
-        case .success(let registerBO):
-            MobileMastermindDefaultsManager.shared.saveLoginData(accessToken: registerBO.accessToken, refreshToken: registerBO.refreshToken, username: registerBO.user.username, imageURL: registerBO.user.image)
-            isLoading = false
-            completion()
-        case .failure(let error):
-            self.error = Utils.shared.checkError(error: error)
-            isLoading = false
-            print(error)
+        if password == repeatPassword {
+            isLoading = true
+            let result = try await registerUseCase.execute(username: username, email: email, password: password, image: imageData)
+            switch result {
+            case .success(let registerBO):
+                MobileMastermindDefaultsManager.shared.saveLoginData(accessToken: registerBO.accessToken, refreshToken: registerBO.refreshToken, username: registerBO.user.username, imageURL: registerBO.user.image)
+                isLoading = false
+                completion()
+            case .failure(let error):
+                isLoading = false
+                checkError(error: error)
+                print(error)
+            }
+        } else {
+            errorMessage = "Las contraseñas son distintas"
+            errorType = RegisterErrors.repeatPasswordError
         }
     }
 }
 
+enum RegisterErrors {
+    case username
+    case email
+    case password
+    case repeatPasswordError
+    case serverError
+    case unknownError
+}
+
 
 extension RegisterViewModel {
+    
+    private func checkError(error: ErrorDTO) {
+        errorMessage = Utils.shared.checkError(error: error)
+        
+        switch error.code {
+        case 400...499:
+            if error.type == "username" {
+                errorType = RegisterErrors.username
+            } else if error.type == "email" {
+                errorType = RegisterErrors.email
+            } else if error.type == "password" {
+                errorType = RegisterErrors.password
+            }
+        case 500:
+            errorType = RegisterErrors.serverError
+        default:
+            errorType = RegisterErrors.unknownError
+        }
+    }
+     
     private func loadTransferable(from photoSelection: PhotosPickerItem) {
         photoSelection.loadTransferable(type: Data.self) { result in
             DispatchQueue.main.async {

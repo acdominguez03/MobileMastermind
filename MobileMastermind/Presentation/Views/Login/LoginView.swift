@@ -30,6 +30,7 @@ struct LoginView: View {
                 CustomTextField(
                     title: LocalizedStringKey("user"),
                     placeholder:  LocalizedStringKey("introduce_your_user"),
+                    hasError: viewModel.errorType == LoginErrors.invalidLogin,
                     text: $viewModel.username
                 )
                 .focused($focusedField, equals: .username)
@@ -40,10 +41,12 @@ struct LoginView: View {
                 CustomTextField(
                     title: LocalizedStringKey("password"),
                     placeholder: LocalizedStringKey("introduce_your_pass"),
+                    error: viewModel.errorMessage,
+                    hasError: viewModel.errorType == LoginErrors.invalidLogin,
                     isSecureField: true,
-                    text: $viewModel.password
+                    text: $viewModel.password,
+                    showText: false
                 )
-                .keyboardType(.numberPad)
                 .focused($focusedField, equals: .password)
                 .onSubmit {
                     focusedField = nil
@@ -88,6 +91,16 @@ struct LoginView: View {
             }
             
             LoadingView(isLoading: $viewModel.isLoading)
+            
+            if (viewModel.errorType == LoginErrors.serverError || viewModel.errorType == LoginErrors.unknownError) {
+                CustomAlert(retry: {
+                    Task {
+                        try await viewModel.login {
+                            path.append(Routes.Home)
+                        }
+                    }
+                })
+            }
         }
     }
 }
