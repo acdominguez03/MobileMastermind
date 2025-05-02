@@ -14,9 +14,10 @@ struct CustomTextField: View {
     var title: LocalizedStringKey
     var placeholder: LocalizedStringKey
     var error: String = ""
+    var hasError: Bool = false
     var isSecureField: Bool = false
     @Binding var text: String
-    @State var showText: Bool = false
+    @State var showText: Bool = true
     var onChange: () -> Void = {}
     
     var body: some View {
@@ -27,14 +28,14 @@ struct CustomTextField: View {
             ZStack(alignment: .trailing) {
                 
                 if(showText) {
-                    SecureField(placeholder, text: $text)
-                        .textFieldStyle(CustomTextFieldStyle(hasError: !error.isEmpty))
-                } else {
                     TextField(placeholder, text: $text)
-                        .textFieldStyle(CustomTextFieldStyle(hasError: !error.isEmpty))
+                        .textFieldStyle(CustomTextFieldStyle(hasError: hasError))
                         .onChange(of: text) { oldValue, newValue in
                             onChange()
                         }
+                } else {
+                    SecureField(placeholder, text: $text)
+                        .textFieldStyle(CustomTextFieldStyle(hasError: hasError))
                 }
 
                 Button(action: {
@@ -47,7 +48,7 @@ struct CustomTextField: View {
                 .opacity(isSecureField ? 1 : 0)
             }.animation(.easeInOut(duration: 0.3), value: showText)
             
-            if(!error.isEmpty) {
+            if(hasError && !error.isEmpty) {
                 Text(error)
                     .foregroundStyle(Color.Colors.questionErrorRed)
             }

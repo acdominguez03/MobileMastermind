@@ -15,6 +15,9 @@ import Foundation
     
     var isLoading: Bool = false
     
+    var errorType: HomeErrors? = nil
+    var errorMessage: String = ""
+    
     let getTotalUserPointsUseCase: GetTotalUserPointsUseCaseProtocol
     let getLastUserGameUseCase: GetLastUserGameUseCaseProtocol
     let getCategoriesUseCase: GetCategoriesUseCaseProtocol
@@ -40,6 +43,7 @@ import Foundation
             try await getLastUserGame()
         case .failure(let error):
             print(error)
+            checkError(error: error)
             isLoading = false
         }
     }
@@ -53,6 +57,7 @@ import Foundation
             try await getCategories()
         case .failure(let error):
             print(error)
+            checkError(error: error)
             isLoading = false
         }
     }
@@ -66,7 +71,27 @@ import Foundation
             isLoading = false
         case .failure(let error):
             print(error)
+            checkError(error: error)
             isLoading = false
         }
     }
+    
+    private func checkError(error: ErrorDTO) {
+        errorMessage = Utils.shared.checkError(error: error)
+        
+        switch error.code {
+        case 400...499:
+            errorType = HomeErrors.categoriesError
+        case 500:
+            errorType = HomeErrors.serverError
+        default:
+            errorType = HomeErrors.unknownError
+        }
+    }
+}
+
+enum HomeErrors {
+    case categoriesError
+    case serverError
+    case unknownError
 }
