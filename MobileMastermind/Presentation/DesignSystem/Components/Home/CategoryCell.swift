@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CategoryCell: View {
     var category: CategoryBO
+    var navigateToGameView: () -> Void = {}
     
     var body: some View {
         HStack(spacing: 20) {
@@ -33,8 +34,12 @@ struct CategoryCell: View {
             
             Spacer()
             
-            Button(action: {}, label: {
+            Button(action: {
+                navigateToGameView()
+            }, label: {
                 Image("RightArrow")
+                    .renderingMode(.template)
+                    .foregroundStyle(Color(hex: category.color))
                     .padding(.trailing, 20)
             })
         }

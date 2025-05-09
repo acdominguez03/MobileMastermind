@@ -8,4 +8,5 @@
 struct LastUserGameBO {
     let points: Int
     let categoryImage: String
+    let categoryColor: String
 }

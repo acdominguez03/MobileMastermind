@@ -9,12 +9,10 @@ import SwiftUI
 
 struct GameView: View {
     @Binding var path: [Routes]
+    var categoryId: String
+    var categoryName: String
     
-    @State var questionNumber = 0
-    @State var timeRemaining: Int = 30
-    @State var progress: CGFloat = 0
-    
-    @State private var name: String = ""
+    @State private var viewModel: GameViewModel = GameViewModel()
     
     var body: some View {
         
@@ -34,93 +32,94 @@ struct GameView: View {
                         
                         Spacer()
                         
-                        Text("\(questionNumber + 1)/10")
+                        Text("\(viewModel.questionNumber + 1)/10")
                             .mediumStyle(size: 15, color: .black)
                     }
                     
                     HStack {
                         Spacer()
-                        CircularProgressView(timeRemaining: timeRemaining, progress: progress, updateTime: {
-                            updateTime()
+                        CircularProgressView(timeRemaining: viewModel.timeRemaining, progress: viewModel.progress, updateTime: {
+                            viewModel.updateTime()
                         })
                         Spacer()
                     }
                     
-                    HStack {
-                        ForEach(Utils.shared.questions.indices, id: \.self) { i in
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundStyle(
-                                    Utils.shared.questions[i].state == .Success ?  Color.Colors.principalGreen :
-                                        Utils.shared.questions[i].state == .Error ? Color.Colors.questionErrorRed : Color.Colors.backgroundResponse
-                                )
-                                .frame(width: (geometry.size.width + 40) / 14, height: 12)
+                    if (viewModel.questions.count > 0) {
+                        questionsMarcks(questions: viewModel.questions, geometry: geometry)
+                        
+                        if(viewModel.questions[viewModel.questionNumber].image != nil) {
+                            ImageQuestionView(
+                                question: viewModel.questions[viewModel.questionNumber],
+                                checkInputNameLenght: {
+                                    viewModel.checkInputNameLength(inputName: viewModel.name)
+                                },
+                                missingLettersText: viewModel.missingLettersText,
+                                initMissingLetterText: {
+                                    viewModel.initMissingLettersText()
+                                },
+                                name: $viewModel.name
+                            )
+                        } else {
+                            OptionsQuestionView(
+                                question: viewModel.questions[viewModel.questionNumber],
+                                isButtonDisabled: viewModel.isButtonDisabled,
+                                checkCorrectAnswer: { index in
+                                    viewModel.checkCorrectAnswer(selectedAnswer: index)
+                                }
+                            )
                         }
-                    }.padding(.vertical, 10)
-                    
-                    if(Utils.shared.questions[questionNumber].image != nil) {
-                        ImageQuestionView(
-                            question: Utils.shared.questions[questionNumber],
-                            checkInputNameLenght: {  },
-                            missingLettersText: "Quedan 3 letras",
-                            initMissingLetterText: {
-                                
-                            },
-                            name: $name
-                        )
-                    } else {
-                        OptionsQuestionView(
-                            question: Utils.shared.questions[questionNumber],
-                            isButtonDisabled: false,
-                            checkCorrectAnswer: { index in
-                                
-                            }
-                        )
                     }
                 }
                 .frame(height: geometry.size.height, alignment: .top)
                 .padding(.horizontal, 25)
-            }
-        }
-        .background(Color.Colors.background)
-        .navigationBarBackButtonHidden()
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                resetTime()
-                questionNumber += 1
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    resetTime()
-                    questionNumber += 1
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        navigateToResults()
+                .onChange(of: viewModel.timeRemaining, {
+                    if(viewModel.timeRemaining == 0) {
+                        viewModel.timeOutResponse()
+                    }
+                })
+                .onChange(of: viewModel.navigateToGameResults, {
+                    DispatchQueue.main.async {
+                        path.append(Routes.GameResults(
+                            questionsJson: Utils.shared.encodeQuestions(viewModel.questions),
+                            gameId: viewModel.gameId,
+                            categoryName: categoryName)
+                        )
+                    }
+                })
+                .onAppear {
+                    Task {
+                        try await viewModel.addGame(categoryId: categoryId)
                     }
                 }
             }
         }
-    }
-    
-    func updateTime() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
-            if timeRemaining > 0 {
-                timeRemaining -= 1
-                progress += 0.033
-                updateTime()
-            } else {
-                resetTime()
-                updateTime()
-            }
+        .background(Color.Colors.background)
+        .navigationBarBackButtonHidden()
+        .ignoresSafeArea(.keyboard)
+        .onTapGesture {
+            hideKeyboard()
         }
     }
-    
-    func resetTime() {
-        timeRemaining = 30
-        progress = 0
-    }
-    
-    func navigateToResults() {
-        path.append(Routes.GameResults)
+}
+
+extension GameView {
+    func questionsMarcks(questions: [QuestionVO], geometry: GeometryProxy) -> some View {
+        HStack {
+            ForEach(questions.indices, id: \.self) { i in
+                    GeometryReader { geo in
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundStyle(
+                                questions[i].state == .Success ? Color.Colors.principalGreen :
+                                questions[i].state == .Error ? Color.Colors.questionErrorRed :
+                                Color.Colors.backgroundResponse
+                            )
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: 12)
+                }
+        }.padding(.vertical, 10)
     }
 }
 
 #Preview {
-    GameView(path: .constant([]))
+    GameView(path: .constant([]), categoryId: "", categoryName: "")
 }

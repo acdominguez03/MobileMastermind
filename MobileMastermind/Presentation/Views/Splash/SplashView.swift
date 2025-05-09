@@ -27,10 +27,10 @@ struct SplashView: View {
                     RegisterView(path: $path)
                 case .Home:
                     HomeView(path: $path)
-                case .Game:
-                    GameView(path: $path)
-                case .GameResults:
-                    GameResultsView(path: $path)
+                case .Game(let categoryId, let categoryName):
+                    GameView(path: $path, categoryId: categoryId, categoryName: categoryName)
+                case .GameResults(let questionsJson, let gameId, let categoryName):
+                    GameResultsView(path: $path, questionsJson: questionsJson, gameId: gameId, categoryName: categoryName)
                 case .Leaderboard:
                     LeaderboardView()
                 case .Profile:

@@ -20,8 +20,7 @@ struct HomeContent: View {
                 
                 if let lastUserGame = viewModel.lastUserGame {
                     RecentQuizCard(
-                        categoryImage: lastUserGame.categoryImage,
-                        points: lastUserGame.points
+                        lastUserGame: lastUserGame
                     )
                 }
                 
@@ -33,9 +32,14 @@ struct HomeContent: View {
                     VStack(spacing: 20) {
                         ForEach(viewModel.categories, id:\.id) { category in
                             Button {
-                                path.append(Routes.Game)
+                                path.append(Routes.Game(categoryId: category.id, categoryName: category.name))
                             } label: {
-                                CategoryCell(category: category)
+                                CategoryCell(
+                                    category: category,
+                                    navigateToGameView: {
+                                        path.append(Routes.Game(categoryId: category.id, categoryName: category.name))
+                                    }
+                                )
                             }
                         }
                     }.padding(.bottom, 10)

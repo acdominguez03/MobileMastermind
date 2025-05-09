@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ImageQuestionView: View {
-    var question: QuestionModel
+    var question: QuestionVO
     var checkInputNameLenght: () -> Void
     var missingLettersText: String
     var initMissingLetterText: () -> Void
@@ -20,7 +20,7 @@ struct ImageQuestionView: View {
             ZStack(alignment: .bottom) {
                 AsyncImage(url: URL(string: question.image ?? "")){ image in
                     image.resizable()
-                        .scaledToFill()
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: UIScreen.main.bounds.width - 40, height: 220)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                     
@@ -52,32 +52,10 @@ struct ImageQuestionView: View {
 }
 
 #Preview {
-    ImageQuestionView(question: QuestionModel(
+    ImageQuestionView(question: QuestionVO(
         id: "", title: "¿Quién es este jugador?",
         options: [],
         correctAnswer: "Ray Allen",
-        image: "https://res.cloudinary.com/dnuejyham/image/upload/v1743760191/image_twjqdk.png"
+        image: "https://res.cloudinary.com/dnuejyham/image/upload/v1746722167/ja0min50n7hafzn6bprj.png"
     ), checkInputNameLenght: { }, missingLettersText: "Quedan 9 caracteres", initMissingLetterText: {}, name: .constant(""))
-}
-
-enum OptionState {
-    case Success
-    case Error
-    case Default
-}
-
-struct OptionModel {
-    var value: String
-    var state: OptionState
-}
-
-struct QuestionModel: Identifiable {
-    var id: String
-    var title: String
-    var options: [OptionModel]
-    var correctAnswer: String
-    var image: String?
-    var state: OptionState = .Default
-    var time: Int = 0
-    var selectedAnswer: String = ""
 }

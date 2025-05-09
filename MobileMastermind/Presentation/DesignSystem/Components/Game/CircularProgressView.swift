@@ -20,14 +20,14 @@ struct CircularProgressView: View {
         ZStack {
             Circle()
                 .stroke(
-                    Color.Colors.principalGreen.opacity(0.5),
+                    checkBorderColor().opacity(0.5),
                     lineWidth: 5
             )
             
             Circle()
                 .trim(from: 0.00, to: progress)
                 .stroke(
-                    Color.Colors.principalGreen,
+                    checkBorderColor(),
                     style: StrokeStyle(
                         lineWidth: 5,
                         lineCap: .round
@@ -42,6 +42,16 @@ struct CircularProgressView: View {
         .frame(width: 100, height: 100)
         .onAppear {
             updateTime()
+        }
+    }
+    
+    func checkBorderColor() -> Color {
+        if timeRemaining > 10 {
+            return Color.Colors.principalGreen
+        } else if timeRemaining > 5 && timeRemaining <= 10 {
+            return Color.Colors.orangeTimer
+        } else {
+            return Color.Colors.questionErrorRed
         }
     }
 }
