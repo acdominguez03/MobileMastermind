@@ -9,8 +9,8 @@ enum Routes: Hashable {
     case Login
     case Register
     case Home
-    case Game
-    case GameResults
+    case Game(categoryId: String, categoryName: String)
+    case GameResults(questionsJson: String, gameId: String, categoryName: String)
     case Leaderboard
     case Profile
 }

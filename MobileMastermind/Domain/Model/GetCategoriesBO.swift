@@ -14,5 +14,6 @@ struct CategoryBO {
     let name: String
     let image: String
     let type: String
+    let color: String
     let numberOfQuizzes: Int
 }

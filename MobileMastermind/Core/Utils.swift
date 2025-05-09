@@ -36,11 +36,29 @@ struct Utils {
         return predicate.evaluate(with: email)
     }
     
+    func encodeQuestions(_ questions: [QuestionVO]) -> String {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(questions),
+           let jsonString = String(data: data, encoding: .utf8) {
+                return jsonString
+        }
+        return ""
+    }
+    
+    func decodeQuestions(_ jsonString: String) -> [QuestionVO] {
+        let decoder = JSONDecoder()
+        if let data = jsonString.data(using: .utf8),
+            let questions = try? decoder.decode([QuestionVO].self, from: data) {
+                return questions
+        }
+        return []
+    }
+    
     var categories: [CategoryBO] = [
-        CategoryBO(id: "0", name: "Kotlin", image: "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin_Icon.png", type: "Language", numberOfQuizzes: 10),
-        CategoryBO(id: "1", name: "Swift", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-NmkQzBEJWMHZiu12EQpS7jQ5LrblCcMFDCDZUzVgbvmJ9LzCukslXuaSdFw7pPqCVk&usqp=CAU", type: "Language", numberOfQuizzes: 10),
-        CategoryBO(id: "2", name: "Android Studio", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Android_Studio_icon_%282023%29.svg/2048px-Android_Studio_icon_%282023%29.svg.png",  type: "IDE", numberOfQuizzes: 10),
-        CategoryBO(id: "3", name: "Xcode", image: "https://w7.pngwing.com/pngs/505/718/png-transparent-xcode-macos-bigsur-icon-thumbnail.png", type: "IDE", numberOfQuizzes: 10),
+        CategoryBO(id: "0", name: "Kotlin", image: "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin_Icon.png", type: "Language", color: "6952DE", numberOfQuizzes: 10),
+        CategoryBO(id: "1", name: "Swift", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-NmkQzBEJWMHZiu12EQpS7jQ5LrblCcMFDCDZUzVgbvmJ9LzCukslXuaSdFw7pPqCVk&usqp=CAU", type: "Language", color: "FF9931", numberOfQuizzes: 10),
+        CategoryBO(id: "2", name: "Android Studio", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Android_Studio_icon_%282023%29.svg/2048px-Android_Studio_icon_%282023%29.svg.png",  type: "IDE", color: "3DDC84", numberOfQuizzes: 10),
+        CategoryBO(id: "3", name: "Xcode", image: "https://w7.pngwing.com/pngs/505/718/png-transparent-xcode-macos-bigsur-icon-thumbnail.png", type: "IDE", color: "1897CE", numberOfQuizzes: 10),
     ]
     
     var stats: [CategoryStatsModel] = [
@@ -128,9 +146,9 @@ struct Utils {
     ]
     
     var questions = [
-        QuestionModel(id: "0", title: "¿Cuál es el resultado?", options: [], correctAnswer: "1,2", image: "https://res.cloudinary.com/dnuejyham/image/upload/v1743760915/example_nhe7ph.png", state: .Error),
-        QuestionModel(id: "1", title: "Kotlin es totalmente compatible con el código Java y puede usarse junto a él en el mismo proyecto", options: [OptionModel(value: "Verdadero", state: OptionState.Success), OptionModel(value: "Falso", state: OptionState.Default)], correctAnswer: "0", state: .Success),
-        QuestionModel(id: "2", title: "¿Cuál de las siguientes opciones es la forma correcta de declarar una variable inmutable en Swift?", options: [OptionModel(value: "val nombre = 'Kotlin'", state: OptionState.Default), OptionModel(value: "let nombre = 'Kotlin'", state: OptionState.Success), OptionModel(value: "var nombre = 'Kotlin'", state: OptionState.Error), OptionModel(value: "const var nombre = 'Kotlin'", state: OptionState.Default)], correctAnswer: "1", state: .Error)
+        QuestionVO(id: "0", title: "¿Cuál es el resultado?", options: [], correctAnswer: "1,2", image: "https://res.cloudinary.com/dnuejyham/image/upload/v1743760915/example_nhe7ph.png", state: .Error),
+        QuestionVO(id: "1", title: "Kotlin es totalmente compatible con el código Java y puede usarse junto a él en el mismo proyecto", options: [OptionModel(value: "Verdadero", state: OptionState.Success), OptionModel(value: "Falso", state: OptionState.Default)], correctAnswer: "0", state: .Success),
+        QuestionVO(id: "2", title: "¿Cuál de las siguientes opciones es la forma correcta de declarar una variable inmutable en Swift?", options: [OptionModel(value: "val nombre = 'Kotlin'", state: OptionState.Default), OptionModel(value: "let nombre = 'Kotlin'", state: OptionState.Success), OptionModel(value: "var nombre = 'Kotlin'", state: OptionState.Error), OptionModel(value: "const var nombre = 'Kotlin'", state: OptionState.Default)], correctAnswer: "1", state: .Error)
     ]
     
 }

@@ -33,6 +33,7 @@ import Foundation
     }
     
     func getTotalUserPoints() async throws {
+        errorType = nil
         isLoading = true
         
         let result = try await getTotalUserPointsUseCase.execute()

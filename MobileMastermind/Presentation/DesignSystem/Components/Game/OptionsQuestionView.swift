@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OptionsQuestionView: View {
     
-    var question: QuestionModel
+    var question: QuestionVO
     var isButtonDisabled: Bool
     var checkCorrectAnswer: (Int) -> Void
     
@@ -42,5 +42,5 @@ struct OptionsQuestionView: View {
 }
 
 #Preview {
-    OptionsQuestionView(question: QuestionModel(id: "1", title: "Cuánto es 2 + 2", options: [OptionModel(value: "3", state: OptionState.Default), OptionModel(value: "4", state: OptionState.Success), OptionModel(value: "5", state: OptionState.Error)], correctAnswer: "1", image: nil, state: OptionState.Default, time: 10, selectedAnswer: "0"), isButtonDisabled: false, checkCorrectAnswer: {_ in})
+    OptionsQuestionView(question: QuestionVO(id: "1", title: "Cuánto es 2 + 2", options: [OptionModel(value: "3", state: OptionState.Default), OptionModel(value: "4", state: OptionState.Success), OptionModel(value: "5", state: OptionState.Error)], correctAnswer: "1", image: nil, state: OptionState.Default, time: 10, selectedAnswer: "0"), isButtonDisabled: false, checkCorrectAnswer: {_ in})
 }

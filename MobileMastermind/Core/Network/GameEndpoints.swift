@@ -8,4 +8,6 @@
 enum GameEndpoints: String {
     case getTotalPoints = "games/getUserTotalPoints"
     case getLastUserGame = "games/getLastUserGame"
+    case addGame = "games/addGame"
+    case updateGameStats = "games/updateGameStats"
 }

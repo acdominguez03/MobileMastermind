@@ -33,4 +33,21 @@ struct GameRepositoryImpl: GameRepositoryProtocol {
         }
     }
     
+    func addGame(categoryId: String) async throws -> AddGameBO {
+        do {
+            let result = try await remote.addGame(categoryId: categoryId)
+            return result.data.toAddGameBO
+        } catch {
+            throw error
+        }
+    }
+    
+    func updateGameStats(gameStats: GameStatsRequest) async throws -> GameStatsBO {
+        do {
+            let result = try await remote.updateGameStats(gameStats: gameStats)
+            return result.data.toGameStatsBO
+        } catch {
+            throw error
+        }
+    }
 }

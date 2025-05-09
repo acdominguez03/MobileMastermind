@@ -16,6 +16,8 @@ protocol RemoteDataSourceProtocol {
     //GAME
     func getTotalUserPoints() async throws -> BaseResponse<TotalPointsDTO>
     func getLastUserGame() async throws -> BaseResponse<LastUserGameDTO?>
+    func addGame(categoryId: String) async throws -> BaseResponse<AddGameDTO>
+    func updateGameStats(gameStats: GameStatsRequest) async throws -> BaseResponse<GameStatsDTO>
     
     //CATEGORY
     func getCategories() async throws -> BaseResponse<GetCategoriesDTO>
@@ -27,6 +29,7 @@ struct RemoteDataSource: RemoteDataSourceProtocol {
     
     static let shared: RemoteDataSource = RemoteDataSource()
     
+    //USERS
     func login(username: String, password: String) async throws -> BaseResponse<LoginDTO> {
         let body: [String: Any] = [
             "username": username,
@@ -88,6 +91,8 @@ struct RemoteDataSource: RemoteDataSourceProtocol {
         }
     }
     
+    
+    //GAMES
     func getTotalUserPoints() async throws -> BaseResponse<TotalPointsDTO> {
         var request = try NetworkUtils.shared.request(endpoint: GameEndpoints.getTotalPoints.rawValue, method: .get, body: nil)
         request.setValue("Bearer \(MobileMastermindDefaultsManager.shared.accessToken ?? "")", forHTTPHeaderField: "Authorization")
@@ -120,6 +125,56 @@ struct RemoteDataSource: RemoteDataSourceProtocol {
         }
     }
     
+    func addGame(categoryId: String) async throws -> BaseResponse<AddGameDTO> {
+        let body: [String: Any] = [
+            "categoryId": categoryId
+        ]
+        
+        guard let bodyData = try? JSONSerialization.data(withJSONObject: body) else {
+            throw ErrorResponse(error: ErrorDTO(code: 500, message: "La codificación de los datos recibidos no ha salido correctamente", type: "iOSError"))
+        }
+        
+        var request = try NetworkUtils.shared.request(endpoint: GameEndpoints.addGame.rawValue, method: .post, body: bodyData)
+        request.setValue("Bearer \(MobileMastermindDefaultsManager.shared.accessToken ?? "")", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            print("Decodificando los datos de la partida")
+            return try JSONDecoder().decode(BaseResponse<AddGameDTO>.self, from: data)
+        } catch {
+            print("Error al decodificar los datos de la partida")
+            let result = try JSONDecoder().decode(ErrorResponse.self, from: data)
+            throw result.error
+        }
+    }
+    
+    func updateGameStats(gameStats: GameStatsRequest) async throws -> BaseResponse<GameStatsDTO> {
+        let resultsArray = gameStats.results.map { questionRequest in
+            return ["questionId": questionRequest.questionId, "time": questionRequest.time, "response": questionRequest.response]
+        }
+        let body: [String: Any] = ["gameId": gameStats.gameId, "results": resultsArray]
+        
+        guard let bodyData = try? JSONSerialization.data(withJSONObject: body) else {
+            throw ErrorResponse(error: ErrorDTO(code: 500, message: "La codificación de los datos recibidos no ha salido correctamente", type: "iOSError"))
+        }
+        
+        var request = try NetworkUtils.shared.request(endpoint: GameEndpoints.updateGameStats.rawValue, method: .post, body: bodyData)
+        request.setValue("Bearer \(MobileMastermindDefaultsManager.shared.accessToken ?? "")", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            print("Decodificando los datos de las estadísticas de la partida")
+            return try JSONDecoder().decode(BaseResponse<GameStatsDTO>.self, from: data)
+        } catch {
+            print("Error al decodificar las estadísticas de la partida")
+            let result = try JSONDecoder().decode(ErrorResponse.self, from: data)
+            throw result.error
+        }
+    }
+    
+    //CATEGORIES
     func getCategories() async throws -> BaseResponse<GetCategoriesDTO> {
         var request = try NetworkUtils.shared.request(endpoint: CategoryEndpoints.getCategories.rawValue, method: .get, body: nil)
         request.setValue("Bearer \(MobileMastermindDefaultsManager.shared.accessToken ?? "")", forHTTPHeaderField: "Authorization")

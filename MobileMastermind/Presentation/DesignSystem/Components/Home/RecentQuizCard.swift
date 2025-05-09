@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct RecentQuizCard: View {
-    var categoryImage: String = "https://res.cloudinary.com/dnuejyham/image/upload/v1743541421/swift_q2pmwe.png"
-    var points: Int = 300
+    var lastUserGame: LastUserGameBO
     
     var body: some View {
         HStack(spacing: 15) {
-            AsyncImage(url: URL(string: categoryImage)){ image in
+            AsyncImage(url: URL(string: lastUserGame.categoryImage)){ image in
                 image.resizable()
                     .frame(width: 80, height: 80)
                     .clipShape(.rect(topLeadingRadius: 10, bottomLeadingRadius: 10))
@@ -26,7 +25,7 @@ struct RecentQuizCard: View {
                 Text(LocalizedStringKey("last_game"))
                     .regularStyle(size: 15, color: .white)
                 
-                Text(String(format: NSLocalizedString("points_message", comment: ""), points))
+                Text(String(format: NSLocalizedString("points_message", comment: ""), lastUserGame.points))
                     .boldStyle(size: 15, color: .white)
                 
                 Spacer()
@@ -35,11 +34,11 @@ struct RecentQuizCard: View {
         .frame(minHeight: 80)
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color.Colors.principalGreen)
+                .fill(Color(hex: lastUserGame.categoryColor))
         )
     }
 }
 
 #Preview {
-    RecentQuizCard()
+    RecentQuizCard(lastUserGame: LastUserGameBO(points: 0, categoryImage: "https://res.cloudinary.com/dnuejyham/image/upload/v1745430027/zyj7bootmqyf61e0j8ug.png", categoryColor: "FF9931"))
 }

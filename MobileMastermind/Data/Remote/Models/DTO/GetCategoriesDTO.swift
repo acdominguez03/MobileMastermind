@@ -42,6 +42,7 @@ extension CategoryDTO {
             name: name ?? "Unknown",
             image: image ?? "",
             type: type ?? "Unknown",
+            color: color ?? "",
             numberOfQuizzes: numberOfQuizzes ?? 10
         )
     }
