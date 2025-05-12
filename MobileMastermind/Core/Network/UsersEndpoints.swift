@@ -9,4 +9,5 @@ enum UsersEndpoints: String {
     case login = "users/login"
     case register = "users/register"
     case logout = "users/logout"
+    case profile = "users/profile"
 }
