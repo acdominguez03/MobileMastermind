@@ -21,6 +21,9 @@ protocol RemoteDataSourceProtocol {
     
     //CATEGORY
     func getCategories() async throws -> BaseResponse<GetCategoriesDTO>
+    
+    //RANKING
+    func getRanking() async throws -> BaseResponse<[RankingDTO]>
 }
 
 struct RemoteDataSource: RemoteDataSourceProtocol {
@@ -186,6 +189,23 @@ struct RemoteDataSource: RemoteDataSourceProtocol {
             return try JSONDecoder().decode(BaseResponse<GetCategoriesDTO>.self, from: data)
         } catch {
             print("Error al decodificar los datos de obtención de las categorías")
+            let result = try JSONDecoder().decode(ErrorResponse.self, from: data)
+            throw result.error
+        }
+    }
+    
+    //RANKING
+    func getRanking() async throws -> BaseResponse<[RankingDTO]> {
+        var request = try NetworkUtils.shared.request(endpoint: RankingEndpoints.getUserRanking.rawValue, method: .get, body: nil)
+        request.setValue("Bearer \(MobileMastermindDefaultsManager.shared.accessToken ?? "")", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            print("Decodificando los datos del ranking de usuarios")
+            return try JSONDecoder().decode(BaseResponse<[RankingDTO]>.self, from: data)
+        } catch {
+            print("Error al decodificar los datos del ranking de usuarios")
             let result = try JSONDecoder().decode(ErrorResponse.self, from: data)
             throw result.error
         }

@@ -33,6 +33,8 @@ struct TopThreeComponentView: View {
     
     var userImage: String
     
+    var isCurrentUser: Bool = false
+    
     var body: some View {
         VStack(alignment: .center) {
             
@@ -80,7 +82,7 @@ struct TopThreeComponentView: View {
             .padding(.bottom, 15)
             
             VStack {
-                Text("\(username)")
+                Text("\(isCurrentUser ? "Tú" : username)")
                     .mediumStyle(size: 20, color: .black)
                 Text(String(format: NSLocalizedString("points_message", comment: ""), points))
                     .mediumStyle(size: 15, color: .black)

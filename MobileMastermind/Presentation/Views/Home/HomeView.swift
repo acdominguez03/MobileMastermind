@@ -19,7 +19,7 @@ struct HomeView: View {
                 HomeContent(path: $path)
                     .tag(0)
                 
-                LeaderboardView()
+                RankingView()
                     .tag(1)
                 
                 ProfileView(path: $path)

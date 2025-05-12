@@ -52,10 +52,10 @@ struct GameResultsView: View {
                     path.removeLast(2)
                 }
             }
+            .padding(.horizontal, 25)
             
             LoadingView(isLoading: $viewModel.isLoading)
         }
-        .padding(.horizontal, 25)
         .background(Color.Colors.background)
         .navigationBarBackButtonHidden()
         .onAppear {
