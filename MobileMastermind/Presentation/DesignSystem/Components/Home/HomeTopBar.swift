@@ -16,6 +16,7 @@ struct HomeTopBar: View {
         HStack(alignment: .center, spacing: 15) {
             AsyncImage(url: URL(string: image)){ image in
                 image.resizable()
+                    .scaledToFill()
                     .frame(width: 60, height: 60)
                     .clipShape(Circle())
             } placeholder: {

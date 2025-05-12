@@ -24,7 +24,6 @@ struct HomeContent: View {
                     )
                 }
                 
-                
                 Text(LocalizedStringKey("categories"))
                     .semiBoldStyle(size: 35)
                 
