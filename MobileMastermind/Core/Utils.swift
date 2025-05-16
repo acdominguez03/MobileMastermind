@@ -61,7 +61,7 @@ struct Utils {
         CategoryBO(id: "3", name: "Xcode", image: "https://w7.pngwing.com/pngs/505/718/png-transparent-xcode-macos-bigsur-icon-thumbnail.png", type: "IDE", color: "1897CE", numberOfQuizzes: 10),
     ]
     
-    var stats: [CategoryStatsModel] = [
+    /*var stats: [CategoryStatsModel] = [
         CategoryStatsModel(
             id: 0,
             categoryName: "Kotlin",
@@ -95,7 +95,7 @@ struct Utils {
             wrongAnswers: 6,
             categoryColor: .Colors.questionErrorRed
         ),
-    ]
+    ]*/
     
     
    

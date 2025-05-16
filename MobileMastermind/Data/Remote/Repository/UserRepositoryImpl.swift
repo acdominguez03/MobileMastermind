@@ -43,4 +43,22 @@ struct UserRepositoryImpl: UserRepositoryProtocol {
             throw error
         }
     }
+    
+    func getProfileData() async throws -> ProfileBO {
+        do {
+            let result = try await remote.getProfileData()
+            return result.data.toProfileBO
+        } catch {
+            throw error
+        }
+    }
+    
+    /*func getProfileData() async throws -> ProfileBO {
+        do {
+            let result = try await remote.getProfileData()
+            return result.data.toProfileBO
+        } catch {
+            throw error
+        }
+    }*/
 }
