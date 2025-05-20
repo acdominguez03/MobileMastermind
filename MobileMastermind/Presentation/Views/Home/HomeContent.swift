@@ -55,12 +55,17 @@ struct HomeContent: View {
             
             LoadingView(isLoading: $viewModel.isLoading)
             
-            if(viewModel.errorType != nil) {
+            if(viewModel.errorType != nil && viewModel.errorType != HomeErrors.tokenExpired) {
                 CustomAlert(message: viewModel.errorMessage, retry: {
                     Task {
                         try await viewModel.getTotalUserPoints()
                     }
                 })
+            }
+        }
+        .onChange(of: viewModel.errorType) { oldValue, newValue in
+            if(newValue == HomeErrors.tokenExpired) {
+                path.removeAll()
             }
         }
     }

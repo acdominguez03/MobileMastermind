@@ -32,7 +32,7 @@ struct SplashView: View {
                 case .GameResults(let questionsJson, let gameId, let categoryName):
                     GameResultsView(path: $path, questionsJson: questionsJson, gameId: gameId, categoryName: categoryName)
                 case .Leaderboard:
-                    RankingView()
+                    RankingView(path: $path)
                 case .Profile:
                     ProfileView(path: $path)
                 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct RankingView: View {
     
+    @Binding var path: [Routes]
+    
     @State private var viewModel: RankingViewModel = RankingViewModel()
     
     @State var isSelectedGlobalFilter: Bool = true
@@ -104,18 +106,32 @@ struct RankingView: View {
                     }
                 }
             }
-            .background(Color.Colors.background)
-            .onAppear {
-                Task {
-                    try await viewModel.getUsersRanking()
-                }
-            }
+            
             
             LoadingView(isLoading: $viewModel.isLoading)
+            
+            if (viewModel.errorType != nil && viewModel.errorType != RankingErrors.tokenExpired) {
+                CustomAlert(message: viewModel.errorMessage) {
+                    Task {
+                        try await viewModel.getUsersRanking()
+                    }
+                }
+            }
+        }
+        .background(Color.Colors.background)
+        .onAppear {
+            Task {
+                try await viewModel.getUsersRanking()
+            }
+        }
+        .onChange(of: viewModel.errorType) { oldValue, newValue in
+            if(newValue == RankingErrors.tokenExpired) {
+                path.removeAll()
+            }
         }
     }
 }
 
 #Preview {
-    RankingView()
+    RankingView(path: .constant([]))
 }

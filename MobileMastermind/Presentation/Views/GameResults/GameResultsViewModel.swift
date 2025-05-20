@@ -18,6 +18,9 @@ import Foundation
     
     var isLoading: Bool = false
     
+    var errorType: GameResultsErrors? = nil
+    var errorMessage: String = ""
+    
     let updateGameStatsUseCase: UpdateGameStatsUseCaseProtocol
     
     init(updateGameStatsUseCase: UpdateGameStatsUseCaseProtocol = UpdateGameStatsUseCase()) {
@@ -44,13 +47,33 @@ import Foundation
     func getAnswersResults() {
         questions.forEach { question in
             switch(question.state) {
-                case .Success:
-                    correctAnswers += 1
-                case .Error:
-                    wrongAnswers += 1
-                case .Default:
-                    break
+            case .Success:
+                correctAnswers += 1
+            case .Error:
+                wrongAnswers += 1
+            case .Default:
+                break
             }
         }
     }
+    
+    func checkError(error: ErrorDTO) {
+        errorMessage = Utils.shared.checkError(error: error)
+        
+        let code = error.code
+        switch code {
+        case 403:
+            errorType = GameResultsErrors.tokenExpired
+        case 404...500:
+            errorType = GameResultsErrors.serverError
+        default:
+            errorType = GameResultsErrors.unknownError
+        }
+    }
+}
+
+enum GameResultsErrors {
+    case tokenExpired
+    case serverError
+    case unknownError
 }

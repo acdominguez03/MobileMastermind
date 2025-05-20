@@ -16,6 +16,9 @@ import Foundation
     
     var isLoading: Bool = false
     
+    var errorType: ProfileErrors? = nil
+    var errorMessage: String = ""
+    
     let logoutUseCase: LogoutUseCaseProtocol
     let getProfileDataUseCase: GetProfileDataUseCaseProtocol
     
@@ -35,6 +38,7 @@ import Foundation
                 completion()
             }
         case .failure(let error):
+            checkError(error: error)
             isLoading.toggle()
             print(error)
         }
@@ -57,4 +61,24 @@ import Foundation
             isLoading.toggle()
         }
     }
+    
+    func checkError(error: ErrorDTO) {
+        errorMessage = Utils.shared.checkError(error: error)
+        
+        let code = error.code
+        switch code {
+        case 403:
+            errorType = ProfileErrors.tokenExpired
+        case 404...500:
+            errorType = ProfileErrors.serverError
+        default:
+            errorType = ProfileErrors.unknownError
+        }
+    }
+}
+
+enum ProfileErrors {
+    case tokenExpired
+    case serverError
+    case unknownError
 }

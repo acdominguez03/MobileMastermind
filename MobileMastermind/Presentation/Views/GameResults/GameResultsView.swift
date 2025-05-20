@@ -55,6 +55,15 @@ struct GameResultsView: View {
             .padding(.horizontal, 25)
             
             LoadingView(isLoading: $viewModel.isLoading)
+            
+            if (viewModel.errorType != nil && viewModel.errorType != GameResultsErrors.tokenExpired) {
+                CustomAlert(message: viewModel.errorMessage) {
+                    Task {
+                        try await viewModel.updateGameStats()
+                    }
+                }
+            }
+            
         }
         .background(Color.Colors.background)
         .navigationBarBackButtonHidden()
@@ -64,6 +73,11 @@ struct GameResultsView: View {
                 viewModel.gameId = gameId
                 viewModel.getAnswersResults()
                 try await viewModel.updateGameStats()
+            }
+        }
+        .onChange(of: viewModel.errorType) { oldValue, newValue in
+            if(newValue == GameResultsErrors.tokenExpired) {
+                path.removeAll()
             }
         }
     }

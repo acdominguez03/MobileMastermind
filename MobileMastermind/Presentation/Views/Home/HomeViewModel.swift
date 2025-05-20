@@ -81,7 +81,9 @@ import Foundation
         errorMessage = Utils.shared.checkError(error: error)
         
         switch error.code {
-        case 400...499:
+        case 403:
+            errorType = HomeErrors.tokenExpired
+        case 403...499:
             errorType = HomeErrors.categoriesError
         case 500:
             errorType = HomeErrors.serverError
@@ -92,6 +94,7 @@ import Foundation
 }
 
 enum HomeErrors {
+    case tokenExpired
     case categoriesError
     case serverError
     case unknownError

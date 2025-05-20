@@ -13,6 +13,9 @@ import Foundation
     
     var isLoading: Bool = false
     
+    var errorType: RankingErrors? = nil
+    var errorMessage: String = ""
+    
     let getUserRankingUseCase: GetUserRankingUseCaseProtocol
     
     init(getUserRankingUseCase: GetUserRankingUseCaseProtocol = GetUserRankingUseCase()) {
@@ -33,4 +36,24 @@ import Foundation
             isLoading.toggle()
         }
     }
+    
+    func checkError(error: ErrorDTO) {
+        errorMessage = Utils.shared.checkError(error: error)
+        
+        let code = error.code
+        switch code {
+        case 403:
+            errorType = RankingErrors.tokenExpired
+        case 404...500:
+            errorType = RankingErrors.serverError
+        default:
+            errorType = RankingErrors.unknownError
+        }
+    }
+}
+
+enum RankingErrors {
+    case tokenExpired
+    case serverError
+    case unknownError
 }
