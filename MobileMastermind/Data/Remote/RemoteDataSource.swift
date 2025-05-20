@@ -12,6 +12,7 @@ protocol RemoteDataSourceProtocol {
     func login(username: String, password: String) async throws -> BaseResponse<LoginDTO>
     func register(username: String, email: String, password: String, image: Data) async throws -> BaseResponse<RegisterDTO>
     func logout() async throws -> BaseResponse<EmptyDataDTO>
+    func getProfileData() async throws -> BaseResponse<ProfileDTO>
     
     //GAME
     func getTotalUserPoints() async throws -> BaseResponse<TotalPointsDTO>
@@ -89,6 +90,22 @@ struct RemoteDataSource: RemoteDataSourceProtocol {
             return try JSONDecoder().decode(BaseResponse<EmptyDataDTO>.self, from: data)
         } catch {
             print("Error al decodificar el logout")
+            let result = try JSONDecoder().decode(ErrorResponse.self, from: data)
+            throw result.error
+        }
+    }
+    
+    func getProfileData() async throws -> BaseResponse<ProfileDTO> {
+        var request = try NetworkUtils.shared.request(endpoint: UsersEndpoints.profile.rawValue, method: .get, body: nil)
+        request.setValue("Bearer \(MobileMastermindDefaultsManager.shared.accessToken ?? "")", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            print("Decodificando los datos del perfil")
+            return try JSONDecoder().decode(BaseResponse<ProfileDTO>.self, from: data)
+        } catch {
+            print("Error al decodificar el perfil")
             let result = try JSONDecoder().decode(ErrorResponse.self, from: data)
             throw result.error
         }

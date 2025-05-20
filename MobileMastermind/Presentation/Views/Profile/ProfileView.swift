@@ -14,7 +14,7 @@ struct ProfileView: View {
     var body: some View {
         VStack(spacing: 10) {
             ZStack {
-                AsyncImage(url: URL(string: Utils.shared.users[0].userImage)){ image in
+                AsyncImage(url: URL(string: MobileMastermindDefaultsManager.shared.imageURL)){ image in
                     image
                         .resizable()
                         .scaledToFill()
@@ -45,25 +45,25 @@ struct ProfileView: View {
             }
             
             
-            Text(Utils.shared.users[0].username)
+            Text(MobileMastermindDefaultsManager.shared.username)
                 .mediumStyle(size: 30, color: .black)
             
             HStack(spacing: 15) {
                 Spacer()
                 
-                UserGeneralStatComponent(image: .ProfileIcons.points, title: LocalizedStringKey("points"), description: "\(Utils.shared.users[0].points)", color: Color.Colors.questionErrorRed)
+                UserGeneralStatComponent(image: .ProfileIcons.points, title: LocalizedStringKey("points"), description: "\(viewModel.totalPoints)", color: Color.Colors.questionErrorRed)
                 
                 Divider()
                     .frame(height: 70)
                     .background(Color.Colors.background)
                 
-                UserGeneralStatComponent(image: .ProfileIcons.bestScore, title: LocalizedStringKey("best_result"), description: "\(500)", color: Color.Colors.principalGreen)
+                UserGeneralStatComponent(image: .ProfileIcons.bestScore, title: LocalizedStringKey("best_result"), description: "\(viewModel.bestScore)", color: Color.Colors.principalGreen)
                 
                 Divider()
                     .frame(height: 70)
                     .background(Color.Colors.background)
                 
-                UserGeneralStatComponent(image: .ProfileIcons.ranking, title: LocalizedStringKey("leaderboard"), description: "\(3)", color: Color.Colors.firstPlace)
+                UserGeneralStatComponent(image: .ProfileIcons.ranking, title: LocalizedStringKey("leaderboard"), description: "\(viewModel.ranking)", color: Color.Colors.firstPlace)
                 
                 Spacer()
             }
@@ -80,7 +80,7 @@ struct ProfileView: View {
             
             ScrollView {
                 VStack(spacing: 15) {
-                    ForEach(Utils().stats) { stat in
+                    ForEach(viewModel.categoryStats) { stat in
                         CategoryStatsComponentsView(stat: stat)
                     }
                 }
@@ -91,7 +91,11 @@ struct ProfileView: View {
         }
         .scrollIndicators(.hidden)
         .background(Color.Colors.background)
-        
+        .onAppear {
+            Task {
+                try await viewModel.getProfileData()
+            }
+        }
     }
 }
 
